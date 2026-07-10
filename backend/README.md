@@ -1,0 +1,1 @@
+# Local-Food-Waste-Minimizer
