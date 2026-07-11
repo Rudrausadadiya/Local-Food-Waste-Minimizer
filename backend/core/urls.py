@@ -14,4 +14,10 @@ urlpatterns = [
     path('api/v1/users/', include('apps.users.urls')),
     path('api/v1/business/', include('apps.business.urls')),
     path('api/v1/products/', include('apps.products.urls')),
+    path('api/v1/orders/', include('apps.orders.urls')),
+    path('api/v1/reservations/', include('apps.reservations.urls')),
+    path('api/v1/marketplace/', include('apps.marketplace.urls')),
+    path('api/v1/donations/', include('apps.donations.urls')),
+    path('api/v1/notifications/', include('apps.notifications.urls')),
+    path('api/v1/analytics/', include('apps.analytics.urls')),
 ]

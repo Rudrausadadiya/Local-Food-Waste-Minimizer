@@ -1040,3 +1040,594 @@ INFO 2026-07-10 21:08:07,150 log 14900 7632 "GET /admin/products/product/add/ HT
 INFO 2026-07-10 21:08:07,348 log 14900 7632 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
 INFO 2026-07-10 21:08:07,565 log 14900 6032 "GET /static/admin/js/inlines.js HTTP/1.1" 200 15628
 INFO 2026-07-10 21:08:07,691 log 14900 6032 "GET /static/admin/img/inline-delete.svg HTTP/1.1" 200 651
+INFO 2026-07-11 14:07:25,155 autoreload 7804 9716 Watching for file changes with StatReloader
+WARNING 2026-07-11 14:07:31,654 log 7804 15152 Not Found: /
+WARNING 2026-07-11 14:07:31,656 log 7804 15152 "GET / HTTP/1.1" 404 3136
+WARNING 2026-07-11 14:07:31,805 log 7804 15152 Not Found: /favicon.ico
+WARNING 2026-07-11 14:07:31,807 log 7804 15152 "GET /favicon.ico HTTP/1.1" 404 3187
+INFO 2026-07-11 14:07:38,047 log 7804 15152 "GET /admin/ HTTP/1.1" 200 13383
+INFO 2026-07-11 14:09:13,295 autoreload 7804 9716 D:\LJ_Sem4\Project\backend\core\settings.py changed, reloading.
+INFO 2026-07-11 14:09:14,979 autoreload 17152 16712 Watching for file changes with StatReloader
+INFO 2026-07-11 14:09:24,331 autoreload 17152 16712 D:\LJ_Sem4\Project\backend\core\settings.py changed, reloading.
+INFO 2026-07-11 14:09:25,893 autoreload 8336 21108 Watching for file changes with StatReloader
+INFO 2026-07-11 14:09:34,989 autoreload 8336 21108 D:\LJ_Sem4\Project\backend\core\settings.py changed, reloading.
+INFO 2026-07-11 14:09:36,494 autoreload 21692 12076 Watching for file changes with StatReloader
+INFO 2026-07-11 14:09:41,046 log 21692 6888 "GET /admin/ HTTP/1.1" 200 17141
+INFO 2026-07-11 14:09:44,567 log 21692 6888 "GET /admin/inventory/inventory/add/ HTTP/1.1" 200 26998
+INFO 2026-07-11 14:09:44,808 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:10:29,649 log 21692 6888 "POST /admin/inventory/inventory/add/ HTTP/1.1" 200 27425
+INFO 2026-07-11 14:10:29,819 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:10:57,449 log 21692 6888 "POST /admin/inventory/inventory/add/ HTTP/1.1" 200 27316
+INFO 2026-07-11 14:10:57,658 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:11:03,447 log 21692 6888 "GET /admin/inventory/inventory/add/ HTTP/1.1" 200 26998
+INFO 2026-07-11 14:11:04,598 log 21692 6888 "GET /admin/ HTTP/1.1" 200 17141
+INFO 2026-07-11 14:11:08,687 log 21692 6888 "GET /admin/business/address/ HTTP/1.1" 200 16640
+INFO 2026-07-11 14:11:08,853 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:11:18,004 log 21692 6888 "GET /admin/ HTTP/1.1" 200 17141
+INFO 2026-07-11 14:11:35,206 log 21692 6888 "GET /admin/products/category/ HTTP/1.1" 200 18567
+INFO 2026-07-11 14:11:35,418 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:11:44,155 log 21692 6888 "GET /admin/products/category/710c7ad7-4568-4154-9574-c2926a49e0a2/change/ HTTP/1.1" 200 24307
+INFO 2026-07-11 14:11:44,314 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:18,514 log 21692 6888 "GET /admin/products/category/ HTTP/1.1" 200 18567
+INFO 2026-07-11 14:12:28,531 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=1 HTTP/1.1" 200 17223
+INFO 2026-07-11 14:12:28,689 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:30,713 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=0 HTTP/1.1" 200 19007
+INFO 2026-07-11 14:12:30,855 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:36,382 log 21692 6888 "GET /admin/products/category/?_facets=True&is_deleted__exact=0 HTTP/1.1" 200 19306
+INFO 2026-07-11 14:12:36,525 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:36,723 log 21692 6888 "GET /static/admin/img/icon-hidelink.svg HTTP/1.1" 200 1131
+INFO 2026-07-11 14:12:38,142 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=0 HTTP/1.1" 200 19007
+INFO 2026-07-11 14:12:38,283 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:39,505 log 21692 6888 "GET /admin/products/category/?_facets=True&is_deleted__exact=0 HTTP/1.1" 200 19306
+INFO 2026-07-11 14:12:39,651 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:41,163 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=0 HTTP/1.1" 200 19007
+INFO 2026-07-11 14:12:41,318 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:42,906 log 21692 6888 "GET /admin/products/category/?_facets=True&is_deleted__exact=0 HTTP/1.1" 200 19306
+INFO 2026-07-11 14:12:43,058 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:44,311 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=0 HTTP/1.1" 200 19007
+INFO 2026-07-11 14:12:44,454 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:45,779 log 21692 6888 "GET /admin/products/category/?_facets=True&is_deleted__exact=0 HTTP/1.1" 200 19306
+INFO 2026-07-11 14:12:45,916 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:47,105 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=0 HTTP/1.1" 200 19007
+INFO 2026-07-11 14:12:47,243 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:48,263 log 21692 6888 "GET /admin/products/category/?_facets=True&is_deleted__exact=0 HTTP/1.1" 200 19306
+INFO 2026-07-11 14:12:48,402 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:12:50,760 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=0 HTTP/1.1" 200 19007
+INFO 2026-07-11 14:12:50,900 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:13:00,408 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=1 HTTP/1.1" 200 17223
+INFO 2026-07-11 14:13:00,553 log 21692 6888 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+ERROR 2026-07-11 14:13:16,778 log 21692 6888 Internal Server Error: /admin/inventory/supplier/
+Traceback (most recent call last):
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "inventory_supplier" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "inventory_supplier"
+                                          ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 1982, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 857, in get_changelist_instance
+    return ChangeList(
+        request,
+    ...<12 lines>...
+        self.search_help_text,
+    )
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\views\main.py", line 143, in __init__
+    self.get_results(request)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\views\main.py", line 300, in get_results
+    result_count = paginator.count
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\paginator.py", line 189, in count
+    return c()
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 610, in count
+    return self.query.get_count(using=self.db)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 651, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 633, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: relation "inventory_supplier" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "inventory_supplier"
+                                          ^
+
+ERROR 2026-07-11 14:13:16,820 log 21692 6888 "GET /admin/inventory/supplier/ HTTP/1.1" 500 194550
+INFO 2026-07-11 14:13:22,241 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=1 HTTP/1.1" 200 17223
+ERROR 2026-07-11 14:13:24,886 log 21692 6888 Internal Server Error: /admin/inventory/stocktransaction/
+Traceback (most recent call last):
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "inventory_stocktransaction" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "inventory_stocktransactio...
+                                          ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 1982, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 857, in get_changelist_instance
+    return ChangeList(
+        request,
+    ...<12 lines>...
+        self.search_help_text,
+    )
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\views\main.py", line 143, in __init__
+    self.get_results(request)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\views\main.py", line 300, in get_results
+    result_count = paginator.count
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\paginator.py", line 189, in count
+    return c()
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 610, in count
+    return self.query.get_count(using=self.db)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 651, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 633, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: relation "inventory_stocktransaction" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "inventory_stocktransactio...
+                                          ^
+
+ERROR 2026-07-11 14:13:24,903 log 21692 6888 "GET /admin/inventory/stocktransaction/ HTTP/1.1" 500 195105
+INFO 2026-07-11 14:13:26,683 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=1 HTTP/1.1" 200 17223
+ERROR 2026-07-11 14:13:28,780 log 21692 6888 Internal Server Error: /admin/inventory/inventorybatch/
+Traceback (most recent call last):
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "inventory_inventorybatch" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "inventory_inventorybatch"
+                                          ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 1982, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 857, in get_changelist_instance
+    return ChangeList(
+        request,
+    ...<12 lines>...
+        self.search_help_text,
+    )
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\views\main.py", line 143, in __init__
+    self.get_results(request)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\views\main.py", line 300, in get_results
+    result_count = paginator.count
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\paginator.py", line 189, in count
+    return c()
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 610, in count
+    return self.query.get_count(using=self.db)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 651, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 633, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: relation "inventory_inventorybatch" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "inventory_inventorybatch"
+                                          ^
+
+ERROR 2026-07-11 14:13:28,797 log 21692 6888 "GET /admin/inventory/inventorybatch/ HTTP/1.1" 500 194960
+INFO 2026-07-11 14:13:30,136 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=1 HTTP/1.1" 200 17223
+ERROR 2026-07-11 14:13:32,312 log 21692 6888 Internal Server Error: /admin/inventory/inventory/
+Traceback (most recent call last):
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "inventory_inventory" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "inventory_inventory"
+                                          ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 1982, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 857, in get_changelist_instance
+    return ChangeList(
+        request,
+    ...<12 lines>...
+        self.search_help_text,
+    )
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\views\main.py", line 143, in __init__
+    self.get_results(request)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\views\main.py", line 300, in get_results
+    result_count = paginator.count
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\paginator.py", line 189, in count
+    return c()
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 610, in count
+    return self.query.get_count(using=self.db)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 651, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 633, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: relation "inventory_inventory" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "inventory_inventory"
+                                          ^
+
+ERROR 2026-07-11 14:13:32,326 log 21692 6888 "GET /admin/inventory/inventory/ HTTP/1.1" 500 194743
+INFO 2026-07-11 14:13:33,468 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=1 HTTP/1.1" 200 17223
+ERROR 2026-07-11 14:13:36,763 log 21692 6888 Internal Server Error: /admin/inventory/wasterecord/
+Traceback (most recent call last):
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "inventory_wasterecord" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "inventory_wasterecord"
+                                          ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 710, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 247, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 1982, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\options.py", line 857, in get_changelist_instance
+    return ChangeList(
+        request,
+    ...<12 lines>...
+        self.search_help_text,
+    )
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\views\main.py", line 143, in __init__
+    self.get_results(request)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\views\main.py", line 300, in get_results
+    result_count = paginator.count
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\core\paginator.py", line 189, in count
+    return c()
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 610, in count
+    return self.query.get_count(using=self.db)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 651, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 633, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\Rudra\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: relation "inventory_wasterecord" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "inventory_wasterecord"
+                                          ^
+
+ERROR 2026-07-11 14:13:36,781 log 21692 6888 "GET /admin/inventory/wasterecord/ HTTP/1.1" 500 194737
+INFO 2026-07-11 14:13:37,746 log 21692 6888 "GET /admin/products/category/?is_deleted__exact=1 HTTP/1.1" 200 17223
+INFO 2026-07-11 14:14:21,837 autoreload 13940 4616 Watching for file changes with StatReloader
+WARNING 2026-07-11 14:14:26,777 log 13940 14432 Not Found: /
+WARNING 2026-07-11 14:14:26,779 log 13940 14432 "GET / HTTP/1.1" 404 3136
+INFO 2026-07-11 14:14:34,138 log 13940 14432 "GET /admin/ HTTP/1.1" 200 17141
+INFO 2026-07-11 14:14:39,868 log 13940 14432 "GET /admin/inventory/inventory/ HTTP/1.1" 200 16091
+INFO 2026-07-11 14:14:40,089 log 13940 14432 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:14:44,238 log 13940 14432 "GET /admin/inventory/inventorybatch/ HTTP/1.1" 200 17031
+INFO 2026-07-11 14:14:44,389 log 13940 14432 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:14:46,646 log 13940 8340 "GET /admin/inventory/stocktransaction/ HTTP/1.1" 200 17223
+INFO 2026-07-11 14:14:46,808 log 13940 8340 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:14:48,244 log 13940 8340 "GET /admin/inventory/supplier/ HTTP/1.1" 200 16078
+INFO 2026-07-11 14:14:48,393 log 13940 8340 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:14:49,438 log 13940 8340 "GET /admin/inventory/wasterecord/ HTTP/1.1" 200 17134
+INFO 2026-07-11 14:14:49,575 log 13940 8340 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:14:51,613 log 13940 8340 "GET /admin/inventory/inventory/add/ HTTP/1.1" 200 26998
+INFO 2026-07-11 14:14:51,780 log 13940 8340 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:14:53,727 log 13940 8340 "GET /admin/inventory/inventorybatch/add/ HTTP/1.1" 200 25817
+INFO 2026-07-11 14:14:53,878 log 13940 8340 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:14:55,611 log 13940 8340 "GET /admin/inventory/stocktransaction/add/ HTTP/1.1" 200 26904
+INFO 2026-07-11 14:14:55,755 log 13940 8340 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:14:57,624 log 13940 8340 "GET /admin/inventory/supplier/add/ HTTP/1.1" 200 21178
+INFO 2026-07-11 14:14:57,857 log 13940 8340 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:14:58,839 log 13940 8340 "GET /admin/inventory/wasterecord/add/ HTTP/1.1" 200 22615
+INFO 2026-07-11 14:14:58,982 log 13940 8340 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:32:36,934 autoreload 6152 2488 Watching for file changes with StatReloader
+WARNING 2026-07-11 14:32:43,058 log 6152 20464 Not Found: /
+WARNING 2026-07-11 14:32:43,060 log 6152 20464 "GET / HTTP/1.1" 404 3293
+INFO 2026-07-11 14:32:49,050 log 6152 20464 "GET /admin/ HTTP/1.1" 200 20695
+INFO 2026-07-11 14:32:55,968 log 6152 20464 "GET /admin/orders/customer/add/ HTTP/1.1" 200 26154
+INFO 2026-07-11 14:32:56,154 log 6152 20464 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:32:59,977 log 6152 20464 "GET /admin/orders/customer/ HTTP/1.1" 200 18750
+INFO 2026-07-11 14:33:00,287 log 6152 20464 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:33:04,445 log 6152 20464 "GET /admin/orders/delivery/ HTTP/1.1" 200 18182
+INFO 2026-07-11 14:33:04,612 log 6152 20464 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:33:08,242 log 6152 20464 "GET /admin/orders/customer/add/ HTTP/1.1" 200 26154
+INFO 2026-07-11 14:33:08,430 log 6152 20464 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:33:34,598 log 6152 20464 "POST /admin/orders/customer/add/ HTTP/1.1" 200 26537
+INFO 2026-07-11 14:33:34,776 log 6152 20464 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:42:43,483 autoreload 14136 14324 Watching for file changes with StatReloader
+WARNING 2026-07-11 14:42:47,399 log 14136 13320 Not Found: /
+WARNING 2026-07-11 14:42:47,401 log 14136 13320 "GET / HTTP/1.1" 404 3456
+INFO 2026-07-11 14:42:52,852 log 14136 13320 "GET /admin/ HTTP/1.1" 200 22481
+INFO 2026-07-11 14:43:01,417 log 14136 13320 "GET /admin/reservations/table/add/ HTTP/1.1" 200 24419
+INFO 2026-07-11 14:43:01,605 log 14136 13320 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:43:24,671 log 14136 13320 "POST /admin/reservations/table/add/ HTTP/1.1" 200 24730
+INFO 2026-07-11 14:43:24,935 log 14136 13320 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:47:15,855 log 14136 13320 "GET /admin/reservations/table/add/ HTTP/1.1" 200 24419
+INFO 2026-07-11 14:47:19,015 log 14136 13320 "GET /admin/reservations/table/add/ HTTP/1.1" 200 24419
+INFO 2026-07-11 14:47:19,179 log 14136 13320 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:47:22,053 log 14136 13320 "GET /admin/ HTTP/1.1" 200 22481
+INFO 2026-07-11 14:47:25,569 log 14136 13320 "GET /admin/ HTTP/1.1" 200 22481
+INFO 2026-07-11 14:47:30,577 log 14136 13320 "GET /admin/reservations/reservation/ HTTP/1.1" 200 21570
+INFO 2026-07-11 14:47:30,736 log 14136 13320 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:47:34,486 log 14136 13320 "GET /admin/reservations/table/ HTTP/1.1" 200 20147
+INFO 2026-07-11 14:47:34,663 log 14136 13320 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:47:40,228 log 14136 13320 "GET /admin/reservations/reservation/add/ HTTP/1.1" 200 50936
+INFO 2026-07-11 14:47:40,429 log 14136 13320 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:47:40,533 log 14136 23560 "GET /static/admin/js/inlines.js HTTP/1.1" 200 15628
+INFO 2026-07-11 14:54:45,732 autoreload 14136 14324 D:\LJ_Sem4\Project\backend\core\settings.py changed, reloading.
+INFO 2026-07-11 14:54:47,978 autoreload 2184 15632 Watching for file changes with StatReloader
+INFO 2026-07-11 14:54:54,669 autoreload 2184 15632 D:\LJ_Sem4\Project\backend\core\urls.py changed, reloading.
+INFO 2026-07-11 14:54:56,681 autoreload 13836 10160 Watching for file changes with StatReloader
+INFO 2026-07-11 14:57:20,625 autoreload 22280 14308 Watching for file changes with StatReloader
+WARNING 2026-07-11 14:57:23,847 log 22280 5136 Not Found: /
+WARNING 2026-07-11 14:57:23,849 log 22280 5136 "GET / HTTP/1.1" 404 3618
+INFO 2026-07-11 14:57:29,272 log 22280 5136 "GET /admin/ HTTP/1.1" 200 25026
+INFO 2026-07-11 14:57:49,539 log 22280 5136 "GET /admin/marketplace/marketplacelisting/ HTTP/1.1" 200 24011
+INFO 2026-07-11 14:57:49,769 log 22280 5136 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:57:55,320 log 22280 5136 "GET /admin/marketplace/marketplaceorder/ HTTP/1.1" 200 22283
+INFO 2026-07-11 14:57:55,635 log 22280 5136 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:57:59,762 log 22280 5136 "GET /admin/marketplace/wishlist/ HTTP/1.1" 200 21430
+INFO 2026-07-11 14:57:59,937 log 22280 5136 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:58:02,587 log 22280 5136 "GET /admin/marketplace/wishlist/add/ HTTP/1.1" 200 24489
+INFO 2026-07-11 14:58:02,783 log 22280 5136 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:58:11,022 log 22280 5136 "GET /admin/marketplace/marketplaceorder/add/ HTTP/1.1" 200 29106
+INFO 2026-07-11 14:58:11,209 log 22280 5136 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:58:16,072 log 22280 5136 "GET /admin/marketplace/marketplacelisting/add/ HTTP/1.1" 200 52385
+INFO 2026-07-11 14:58:16,251 log 22280 5136 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-07-11 14:58:16,369 log 22280 15124 "GET /static/admin/img/icon-unknown.svg HTTP/1.1" 200 806
+INFO 2026-07-11 15:37:42,018 autoreload 22132 23456 Watching for file changes with StatReloader
+WARNING 2026-07-11 15:37:46,751 log 22132 11352 Not Found: /
+WARNING 2026-07-11 15:37:46,753 log 22132 11352 "GET / HTTP/1.1" 404 4102
+INFO 2026-07-11 15:37:54,594 log 22132 11352 "GET /admin/ HTTP/1.1" 200 33413
+INFO 2026-07-11 15:38:08,396 log 22132 11352 "GET /api/docs/ HTTP/1.1" 200 4652
+INFO 2026-07-11 15:38:09,938 log 22132 11352 "GET /api/schema/ HTTP/1.1" 200 571711

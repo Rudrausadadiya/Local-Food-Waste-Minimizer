@@ -41,6 +41,13 @@ INSTALLED_APPS = [
     'apps.users.apps.UsersConfig',
     'apps.business.apps.BusinessConfig',
     'apps.products.apps.ProductsConfig',
+    'apps.inventory.apps.InventoryConfig',
+    'apps.orders.apps.OrdersConfig',
+    'apps.reservations.apps.ReservationsConfig',
+    'apps.marketplace.apps.MarketplaceConfig',
+    'apps.donations.apps.DonationsConfig',
+    'apps.notifications.apps.NotificationsConfig',
+    'apps.analytics.apps.AnalyticsConfig',
 ]
 
 MIDDLEWARE = [
