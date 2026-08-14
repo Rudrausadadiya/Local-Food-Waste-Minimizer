@@ -1,10 +1,13 @@
 from django.apps import AppConfig
 
 
+# Class: ReservationsConfig
 class ReservationsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'apps.reservations'
     verbose_name = 'Reservation Management'
 
+    # Method: ready
     def ready(self):
-        import apps.reservations.signals  # noqa: F401
+        import importlib
+        importlib.import_module('apps.reservations.signals')

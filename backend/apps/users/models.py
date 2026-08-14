@@ -4,8 +4,9 @@ from django.utils.translation import gettext_lazy as _
 from common.models import UUIDTimeStampedModel
 from apps.users.managers import UserManager
 from apps.users.choices import UserRole
-from typing import Any
 
+
+# Class: User
 class User(AbstractBaseUser, PermissionsMixin, UUIDTimeStampedModel):
     """
     Custom User model representing an authenticated entity in the system.
@@ -68,16 +69,19 @@ class User(AbstractBaseUser, PermissionsMixin, UUIDTimeStampedModel):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
+    # Class: Meta
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
         ordering = ['-created_at']
 
+    # Method: __str__
     def __str__(self) -> str:
         """String representation of the User model."""
         return self.email
 
     @property
+    # Method: full_name
     def full_name(self) -> str:
         """
         Returns the user's full name.

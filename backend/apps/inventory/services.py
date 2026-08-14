@@ -4,11 +4,13 @@ from django.utils import timezone
 from .models import StockTransaction, InventoryBatch, WasteRecord
 from .repositories import InventoryRepository, StockTransactionRepository, InventoryBatchRepository, WasteRecordRepository
 from .validators import validate_transfer_businesses, validate_stock_availability, validate_unique_batch
-from .signals import stock_updated, batch_expired, waste_recorded, low_stock
+from .signals import stock_updated, waste_recorded, low_stock
 
+# Class: InventoryService
 class InventoryService:
     @staticmethod
     @transaction.atomic
+    # Method: stock_in
     def stock_in(inventory_id: str, quantity: Decimal, user_id: str, batch_details: dict, reference_number: str = None, remarks: str = None):
         validate_unique_batch(inventory_id, batch_details['batch_number'])
 
@@ -40,6 +42,7 @@ class InventoryService:
 
     @staticmethod
     @transaction.atomic
+    # Method: stock_out
     def stock_out(inventory_id: str, quantity: Decimal, user_id: str, reference_number: str = None, remarks: str = None, source_id: str = None):
         inventory = InventoryRepository.get_by_id(inventory_id)
         validate_stock_availability(inventory, quantity)
@@ -80,6 +83,7 @@ class InventoryService:
 
     @staticmethod
     @transaction.atomic
+    # Method: stock_transfer
     def stock_transfer(inventory_from_id: str, inventory_to_id: str, quantity: Decimal, user_id: str, batch_details: dict = None, reference_number: str = None, remarks: str = None):
         inventory_from = InventoryRepository.get_by_id(inventory_from_id)
         inventory_to = InventoryRepository.get_by_id(inventory_to_id)
@@ -129,6 +133,7 @@ class InventoryService:
 
     @staticmethod
     @transaction.atomic
+    # Method: record_waste
     def record_waste(inventory_id: str, quantity: Decimal, reason: str, user_id: str, image: str = None, remarks: str = None):
         inventory = InventoryRepository.get_by_id(inventory_id)
         validate_stock_availability(inventory, quantity)
@@ -183,6 +188,7 @@ class InventoryService:
 
     @staticmethod
     @transaction.atomic
+    # Method: reserve_stock
     def reserve_stock(inventory_id: str, quantity: Decimal) -> None:
         inventory = InventoryRepository.get_by_id(inventory_id)
         validate_stock_availability(inventory, quantity)
@@ -191,6 +197,7 @@ class InventoryService:
 
     @staticmethod
     @transaction.atomic
+    # Method: release_stock
     def release_stock(inventory_id: str, quantity: Decimal) -> None:
         InventoryRepository.update_stock_atomic(inventory_id, -quantity, field='reserved_stock')
         InventoryRepository.update_stock_atomic(inventory_id, quantity, field='current_stock')

@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 import csv
@@ -13,6 +13,7 @@ from .services import CategoryService, ProductService, ProductBulkService, Produ
 from .permissions import IsBusinessOwnerOrAdmin
 from .filters import ProductFilter
 
+# Class: CategoryViewSet
 class CategoryViewSet(viewsets.ModelViewSet):
     """
     ViewSet for Category CRUD.
@@ -25,22 +26,27 @@ class CategoryViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'description']
     ordering_fields = ['name', 'created_at']
 
+    # Method: get_queryset
     def get_queryset(self):
         business_id = self.request.query_params.get('business')
         if business_id:
             return self.queryset.filter(business_id=business_id)
         return self.queryset
 
+    # Method: perform_create
     def perform_create(self, serializer):
         CategoryService.create_category(serializer.validated_data)
 
+    # Method: perform_update
     def perform_update(self, serializer):
         CategoryService.update_category(self.get_object(), serializer.validated_data)
 
+    # Method: perform_destroy
     def perform_destroy(self, instance):
         CategoryService.soft_delete_category(instance)
 
 
+# Class: ProductViewSet
 class ProductViewSet(viewsets.ModelViewSet):
     """
     ViewSet for Product CRUD and Bulk operations.
@@ -53,12 +59,15 @@ class ProductViewSet(viewsets.ModelViewSet):
     search_fields = ['sku', 'barcode', 'product_name', 'description']
     ordering_fields = ['product_name', 'selling_price', 'created_at']
 
+    # Method: perform_create
     def perform_create(self, serializer):
         ProductService.create_product(serializer.validated_data)
 
+    # Method: perform_update
     def perform_update(self, serializer):
         ProductService.update_product(self.get_object(), serializer.validated_data)
 
+    # Method: perform_destroy
     def perform_destroy(self, instance):
         ProductService.soft_delete_product(instance)
 
@@ -79,6 +88,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         description="Bulk import products from CSV."
     )
     @action(detail=False, methods=['post'], parser_classes=[MultiPartParser])
+    # Method: bulk_import
     def bulk_import(self, request):
         business_id = request.data.get('business_id')
         file_obj = request.FILES.get('file')
@@ -99,6 +109,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         description="Bulk export products as CSV."
     )
     @action(detail=False, methods=['get'])
+    # Method: bulk_export
     def bulk_export(self, request):
         business_id = request.query_params.get('business_id')
         if not business_id:
@@ -117,6 +128,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         return response
 
 
+# Class: ProductImageViewSet
 class ProductImageViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing Product Images.
@@ -125,6 +137,7 @@ class ProductImageViewSet(viewsets.ModelViewSet):
     serializer_class = ProductImageSerializer
     permission_classes = [IsBusinessOwnerOrAdmin]
 
+    # Method: perform_create
     def perform_create(self, serializer):
         product_id = self.request.data.get('product')
         product = Product.available_objects.filter(id=product_id).first()
@@ -133,10 +146,12 @@ class ProductImageViewSet(viewsets.ModelViewSet):
             raise serializers.ValidationError({'product': 'Invalid product ID'})
         ProductImageService.upload_image(product, serializer.validated_data)
 
+    # Method: perform_destroy
     def perform_destroy(self, instance):
         ProductImageService.delete_image(instance)
 
     @action(detail=True, methods=['post'])
+    # Method: set_primary
     def set_primary(self, request, pk=None):
         instance = self.get_object()
         ProductImageService.set_primary_image(instance)

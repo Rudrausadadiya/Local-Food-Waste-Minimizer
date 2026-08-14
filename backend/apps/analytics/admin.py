@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import AnalyticsSnapshot, ScheduledReport, AnalyticsExportLog
 
 @admin.register(AnalyticsSnapshot)
+# Class: AnalyticsSnapshotAdmin
 class AnalyticsSnapshotAdmin(admin.ModelAdmin):
     list_display = ('snapshot_type', 'business_id', 'branch_id', 'timestamp')
     list_filter = ('snapshot_type', 'timestamp')
@@ -9,12 +10,14 @@ class AnalyticsSnapshotAdmin(admin.ModelAdmin):
     readonly_fields = ('id', 'timestamp')
 
 @admin.register(ScheduledReport)
+# Class: ScheduledReportAdmin
 class ScheduledReportAdmin(admin.ModelAdmin):
     list_display = ('report_type', 'user', 'frequency', 'export_format', 'is_active', 'next_run_at')
     list_filter = ('frequency', 'export_format', 'is_active')
     search_fields = ('report_type', 'user__email')
 
 @admin.register(AnalyticsExportLog)
+# Class: AnalyticsExportLogAdmin
 class AnalyticsExportLogAdmin(admin.ModelAdmin):
     list_display = ('report_name', 'user', 'export_format', 'status', 'created_at')
     list_filter = ('export_format', 'status')

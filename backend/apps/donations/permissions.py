@@ -1,6 +1,8 @@
 from rest_framework import permissions
 
+# Class: HasDonationPermission
 class HasDonationPermission(permissions.BasePermission):
+    # Method: has_permission
     def has_permission(self, request, view):
         if not request.user.is_authenticated:
             return False

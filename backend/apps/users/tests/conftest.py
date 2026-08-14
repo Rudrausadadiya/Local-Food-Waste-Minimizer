@@ -4,13 +4,16 @@ from apps.users.models import User
 from apps.users.choices import UserRole
 
 @pytest.fixture
+# Function: api_client
 def api_client():
     """Returns a DRF API client instance."""
     return APIClient()
 
 @pytest.fixture
+# Function: create_user
 def create_user(db):
     """Factory to create a user."""
+    # Method: make_user
     def make_user(**kwargs):
         kwargs.setdefault('password', 'StrongPass123!')
         kwargs.setdefault('email', 'test@example.com')
@@ -25,6 +28,7 @@ def create_user(db):
     return make_user
 
 @pytest.fixture
+# Function: active_user
 def active_user(create_user):
     """Returns an active, email-verified user."""
     return create_user(
@@ -34,6 +38,7 @@ def active_user(create_user):
     )
 
 @pytest.fixture
+# Function: admin_user
 def admin_user(create_user):
     """Returns an admin user."""
     return create_user(
@@ -44,6 +49,7 @@ def admin_user(create_user):
     )
 
 @pytest.fixture
+# Function: auth_client
 def auth_client(api_client, active_user):
     """Returns an API client authenticated with a valid user."""
     from rest_framework_simplejwt.tokens import RefreshToken

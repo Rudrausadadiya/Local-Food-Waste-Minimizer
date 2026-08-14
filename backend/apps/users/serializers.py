@@ -20,6 +20,7 @@ from apps.users.choices import UserRole
         )
     ]
 )
+# Class: RegistrationSerializer
 class RegistrationSerializer(serializers.Serializer):
     """
     Serializer for validating user registration input.
@@ -32,7 +33,13 @@ class RegistrationSerializer(serializers.Serializer):
     )
     first_name = serializers.CharField(required=True, max_length=150)
     last_name = serializers.CharField(required=True, max_length=150)
+    role = serializers.CharField(required=False, default=UserRole.CUSTOMER)
+    business_name = serializers.CharField(required=False, allow_blank=True, max_length=255)
+    business_type = serializers.CharField(required=False, allow_blank=True, max_length=50)
+    registration_number = serializers.CharField(required=False, allow_blank=True, max_length=100)
+    gst_number = serializers.CharField(required=False, allow_blank=True, max_length=100)
     
+    # Method: validate_password
     def validate_password(self, value):
         """Apply Django's robust password validation."""
         try:
@@ -53,6 +60,7 @@ class RegistrationSerializer(serializers.Serializer):
         )
     ]
 )
+# Class: LoginSerializer
 class LoginSerializer(serializers.Serializer):
     """
     Serializer for validating user login credentials.
@@ -64,12 +72,16 @@ class LoginSerializer(serializers.Serializer):
         style={'input_type': 'password'}
     )
 
+# Class: ProfileSerializer
 class ProfileSerializer(serializers.ModelSerializer):
     """
     Serializer for displaying user profile information.
     """
     role_display = serializers.CharField(source='get_role_display', read_only=True)
+    business_status = serializers.SerializerMethodField()
+    is_verified = serializers.SerializerMethodField()
 
+    # Class: Meta
     class Meta:
         model = User
         fields = (
@@ -81,10 +93,36 @@ class ProfileSerializer(serializers.ModelSerializer):
             'profile_image', 
             'role', 
             'role_display',
+            'business_status',
+            'is_verified',
             'is_email_verified',
             'created_at'
         )
         read_only_fields = fields
+
+    # Method: get_is_verified
+    def get_is_verified(self, obj):
+        if obj.role in [UserRole.VENDOR, UserRole.NGO]:
+            biz = obj.businesses.filter(is_deleted=False).first()
+            if biz:
+                return bool(biz.is_verified)
+            ngo = getattr(obj, 'ngo_profile', None)
+            if ngo:
+                return ngo.verification_status == 'VERIFIED'
+            return False
+        return True
+
+    # Method: get_business_status
+    def get_business_status(self, obj):
+        if obj.role in [UserRole.VENDOR, UserRole.NGO]:
+            biz = obj.businesses.filter(is_deleted=False).first()
+            if biz:
+                return biz.business_status
+            ngo = getattr(obj, 'ngo_profile', None)
+            if ngo:
+                return 'APPROVED' if ngo.verification_status == 'VERIFIED' else ngo.verification_status
+            return None
+        return 'APPROVED'
 
 @extend_schema_serializer(
     examples=[
@@ -99,13 +137,15 @@ class ProfileSerializer(serializers.ModelSerializer):
         )
     ]
 )
+# Class: UpdateProfileSerializer
 class UpdateProfileSerializer(serializers.Serializer):
     """
     Serializer for validating profile update input.
     """
     first_name = serializers.CharField(required=False, max_length=150)
     last_name = serializers.CharField(required=False, max_length=150)
-    phone_number = serializers.CharField(required=False, max_length=20)
+    phone_number = serializers.CharField(required=False, max_length=20, allow_blank=True)
+    profile_image = serializers.CharField(required=False, allow_null=True, allow_blank=True)
 
 @extend_schema_serializer(
     examples=[
@@ -118,6 +158,7 @@ class UpdateProfileSerializer(serializers.Serializer):
         )
     ]
 )
+# Class: ForgotPasswordSerializer
 class ForgotPasswordSerializer(serializers.Serializer):
     """
     Serializer for validating the forgot password request.
@@ -137,6 +178,7 @@ class ForgotPasswordSerializer(serializers.Serializer):
         )
     ]
 )
+# Class: ResetPasswordSerializer
 class ResetPasswordSerializer(serializers.Serializer):
     """
     Serializer for validating the password reset action.
@@ -149,6 +191,7 @@ class ResetPasswordSerializer(serializers.Serializer):
         style={'input_type': 'password'}
     )
 
+    # Method: validate_new_password
     def validate_new_password(self, value):
         """Apply Django's robust password validation."""
         try:
@@ -169,6 +212,7 @@ class ResetPasswordSerializer(serializers.Serializer):
         )
     ]
 )
+# Class: VerifyEmailSerializer
 class VerifyEmailSerializer(serializers.Serializer):
     """
     Serializer for validating the email verification token.
@@ -187,6 +231,7 @@ class VerifyEmailSerializer(serializers.Serializer):
         )
     ]
 )
+# Class: LogoutSerializer
 class LogoutSerializer(serializers.Serializer):
     """
     Serializer for validating the logout request (refresh token blacklisting).

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Notification, NotificationPreference, NotificationTemplate, NotificationLog
 
+# Class: NotificationLogInline
 class NotificationLogInline(admin.TabularInline):
     model = NotificationLog
     extra = 0
@@ -8,6 +9,7 @@ class NotificationLogInline(admin.TabularInline):
     can_delete = False
 
 @admin.register(Notification)
+# Class: NotificationAdmin
 class NotificationAdmin(admin.ModelAdmin):
     list_display = ('title', 'recipient', 'category', 'channel', 'priority', 'status', 'created_at')
     list_filter = ('status', 'channel', 'category', 'priority', 'is_archived')
@@ -16,12 +18,14 @@ class NotificationAdmin(admin.ModelAdmin):
     readonly_fields = ('id', 'created_at', 'updated_at')
 
 @admin.register(NotificationPreference)
+# Class: NotificationPreferenceAdmin
 class NotificationPreferenceAdmin(admin.ModelAdmin):
     list_display = ('user', 'email_enabled', 'sms_enabled', 'push_enabled', 'in_app_enabled', 'digest_mode')
     list_filter = ('digest_mode',)
     search_fields = ('user__email',)
 
 @admin.register(NotificationTemplate)
+# Class: NotificationTemplateAdmin
 class NotificationTemplateAdmin(admin.ModelAdmin):
     list_display = ('name', 'event_type', 'category', 'language', 'is_active')
     list_filter = ('category', 'language', 'is_active')

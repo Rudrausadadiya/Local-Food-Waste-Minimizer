@@ -2,19 +2,23 @@ from django.contrib import admin
 from .models import Table, Reservation, ReservationItem, ReservationTable, ReservationHistory
 
 @admin.register(Table)
+# Class: TableAdmin
 class TableAdmin(admin.ModelAdmin):
     list_display = ('table_number', 'capacity', 'business', 'branch', 'is_active')
     list_filter = ('is_active', 'business', 'branch')
     search_fields = ('table_number',)
 
+# Class: ReservationItemInline
 class ReservationItemInline(admin.TabularInline):
     model = ReservationItem
     extra = 0
 
+# Class: ReservationTableInline
 class ReservationTableInline(admin.TabularInline):
     model = ReservationTable
     extra = 0
 
+# Class: ReservationHistoryInline
 class ReservationHistoryInline(admin.TabularInline):
     model = ReservationHistory
     extra = 0
@@ -22,6 +26,7 @@ class ReservationHistoryInline(admin.TabularInline):
     can_delete = False
 
 @admin.register(Reservation)
+# Class: ReservationAdmin
 class ReservationAdmin(admin.ModelAdmin):
     list_display = (
         'reservation_number', 'customer', 'reservation_date', 'reservation_time', 

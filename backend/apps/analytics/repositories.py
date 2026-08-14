@@ -1,10 +1,11 @@
-from typing import Optional, Dict, Any, List
-from django.db.models import QuerySet, Sum, Count, Avg, F
-from django.utils import timezone
-from .models import AnalyticsSnapshot, ScheduledReport, AnalyticsExportLog
+from typing import Optional, Dict, Any
+from django.db.models import Sum, Count, Avg, F
+from .models import AnalyticsSnapshot, AnalyticsExportLog
 
+# Class: AnalyticsSnapshotRepository
 class AnalyticsSnapshotRepository:
     @staticmethod
+    # Method: get_latest
     def get_latest(snapshot_type: str, business_id: str = None) -> Optional[AnalyticsSnapshot]:
         qs = AnalyticsSnapshot.objects.filter(snapshot_type=snapshot_type)
         if business_id:
@@ -12,15 +13,19 @@ class AnalyticsSnapshotRepository:
         return qs.first()
 
     @staticmethod
+    # Method: create
     def create(data: Dict[str, Any]) -> AnalyticsSnapshot:
         return AnalyticsSnapshot.objects.create(**data)
 
+# Class: AnalyticsExportLogRepository
 class AnalyticsExportLogRepository:
     @staticmethod
+    # Method: create
     def create(data: Dict[str, Any]) -> AnalyticsExportLog:
         return AnalyticsExportLog.objects.create(**data)
 
     @staticmethod
+    # Method: update
     def update(log: AnalyticsExportLog, data: Dict[str, Any]) -> AnalyticsExportLog:
         for key, value in data.items():
             setattr(log, key, value)
@@ -28,6 +33,7 @@ class AnalyticsExportLogRepository:
         return log
 
 
+# Class: CrossModuleAnalyticsRepository
 class CrossModuleAnalyticsRepository:
     """
     Optimized repositories for cross-module queries.
@@ -35,6 +41,7 @@ class CrossModuleAnalyticsRepository:
     """
 
     @staticmethod
+    # Method: get_sales_summary
     def get_sales_summary(start_date, end_date, business_id: str = None) -> Dict[str, Any]:
         from apps.orders.models import Order, OrderStatus
         
@@ -52,6 +59,7 @@ class CrossModuleAnalyticsRepository:
         )
 
     @staticmethod
+    # Method: get_inventory_summary
     def get_inventory_summary(business_id: str = None) -> Dict[str, Any]:
         from apps.inventory.models import Inventory
         
@@ -71,6 +79,7 @@ class CrossModuleAnalyticsRepository:
         }
 
     @staticmethod
+    # Method: get_donation_impact
     def get_donation_impact(start_date, end_date, business_id: str = None) -> Dict[str, Any]:
         from apps.donations.models import DonationImpact
         
@@ -88,6 +97,7 @@ class CrossModuleAnalyticsRepository:
         )
 
     @staticmethod
+    # Method: get_marketplace_summary
     def get_marketplace_summary(start_date, end_date, business_id: str = None) -> Dict[str, Any]:
         from apps.marketplace.models import MarketplaceOrder, MarketplaceOrderStatus
         

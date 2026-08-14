@@ -10,6 +10,7 @@ from .services import NotificationService, NotificationPreferenceService
 from .filters import NotificationFilter
 from .permissions import IsNotificationOwnerOrAdmin, IsAdminUser
 
+# Class: NotificationViewSet
 class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
     """
     Inbox view for users.
@@ -22,6 +23,7 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = ['created_at', 'priority']
     ordering = ['-created_at']
 
+    # Method: get_queryset
     def get_queryset(self):
         user = self.request.user
         if not user.is_authenticated:
@@ -31,6 +33,7 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
         return Notification.objects.filter(recipient=user, is_archived=False)
 
     @action(detail=True, methods=['post'])
+    # Method: mark_as_read
     def mark_as_read(self, request, pk=None):
         notif = NotificationService.mark_as_read(str(pk), request.user)
         if notif:
@@ -38,6 +41,7 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
         return Response({'detail': 'Not found or forbidden.'}, status=status.HTTP_404_NOT_FOUND)
 
     @action(detail=False, methods=['post'])
+    # Method: mark_all_as_read
     def mark_all_as_read(self, request):
         qs = self.get_queryset().filter(read_at__isnull=True)
         count = qs.count()
@@ -45,10 +49,12 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
         return Response({'marked_count': count})
 
 
+# Class: NotificationPreferenceViewSet
 class NotificationPreferenceViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationPreferenceSerializer
     permission_classes = [IsNotificationOwnerOrAdmin]
     
+    # Method: get_queryset
     def get_queryset(self):
         user = self.request.user
         if not user.is_authenticated:
@@ -58,17 +64,20 @@ class NotificationPreferenceViewSet(viewsets.ModelViewSet):
         return NotificationPreference.objects.filter(user=user)
 
     @action(detail=False, methods=['get'])
+    # Method: me
     def me(self, request):
         from .repositories import NotificationPreferenceRepository
         pref = NotificationPreferenceRepository.get_or_create(request.user)
         return Response(self.get_serializer(pref).data)
 
     @action(detail=False, methods=['patch'])
+    # Method: update_me
     def update_me(self, request):
         pref = NotificationPreferenceService.update_preferences(request.user, request.data)
         return Response(self.get_serializer(pref).data)
 
 
+# Class: NotificationTemplateViewSet
 class NotificationTemplateViewSet(viewsets.ModelViewSet):
     queryset = NotificationTemplate.objects.all()
     serializer_class = NotificationTemplateSerializer

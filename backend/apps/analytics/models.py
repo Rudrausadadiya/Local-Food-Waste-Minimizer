@@ -3,23 +3,27 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
+# Class: ExportFormat
 class ExportFormat(models.TextChoices):
     CSV = 'CSV', 'CSV'
     EXCEL = 'EXCEL', 'Excel'
     PDF = 'PDF', 'PDF'
     JSON = 'JSON', 'JSON'
 
+# Class: ExportStatus
 class ExportStatus(models.TextChoices):
     PENDING = 'PENDING', _('Pending')
     PROCESSING = 'PROCESSING', _('Processing')
     COMPLETED = 'COMPLETED', _('Completed')
     FAILED = 'FAILED', _('Failed')
 
+# Class: ScheduleFrequency
 class ScheduleFrequency(models.TextChoices):
     DAILY = 'DAILY', _('Daily')
     WEEKLY = 'WEEKLY', _('Weekly')
     MONTHLY = 'MONTHLY', _('Monthly')
 
+# Class: AnalyticsSnapshot
 class AnalyticsSnapshot(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     snapshot_type = models.CharField(max_length=100, help_text="E.g., BUSINESS_KPI, GLOBAL_KPI")
@@ -28,13 +32,16 @@ class AnalyticsSnapshot(models.Model):
     data = models.JSONField(default=dict)
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    # Class: Meta
     class Meta:
         ordering = ['-timestamp']
 
+    # Method: __str__
     def __str__(self):
         return f"Snapshot {self.snapshot_type} at {self.timestamp}"
 
 
+# Class: ScheduledReport
 class ScheduledReport(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='scheduled_reports')
@@ -53,10 +60,12 @@ class ScheduledReport(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    # Method: __str__
     def __str__(self):
         return f"{self.report_type} for {self.user.email} ({self.frequency})"
 
 
+# Class: AnalyticsExportLog
 class AnalyticsExportLog(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='exports')
@@ -77,8 +86,10 @@ class AnalyticsExportLog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(null=True, blank=True)
 
+    # Class: Meta
     class Meta:
         ordering = ['-created_at']
 
+    # Method: __str__
     def __str__(self):
         return f"{self.report_name} ({self.export_format}) - {self.status}"

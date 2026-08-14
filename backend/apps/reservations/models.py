@@ -4,11 +4,13 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from decimal import Decimal
 
+# Class: ReservationType
 class ReservationType(models.TextChoices):
     TABLE = 'TABLE', _('Table')
     PRODUCT = 'PRODUCT', _('Product')
     EVENT = 'EVENT', _('Event')
 
+# Class: ReservationStatus
 class ReservationStatus(models.TextChoices):
     PENDING = 'PENDING', _('Pending')
     CONFIRMED = 'CONFIRMED', _('Confirmed')
@@ -16,12 +18,14 @@ class ReservationStatus(models.TextChoices):
     COMPLETED = 'COMPLETED', _('Completed')
     EXPIRED = 'EXPIRED', _('Expired')
 
+# Class: AdvancePaymentStatus
 class AdvancePaymentStatus(models.TextChoices):
     NOT_REQUIRED = 'NOT_REQUIRED', _('Not Required')
     PENDING = 'PENDING', _('Pending')
     PAID = 'PAID', _('Paid')
     REFUNDED = 'REFUNDED', _('Refunded')
 
+# Class: Table
 class Table(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='tables')
@@ -32,14 +36,17 @@ class Table(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    # Class: Meta
     class Meta:
         unique_together = ('branch', 'table_number')
         ordering = ['table_number']
 
+    # Method: __str__
     def __str__(self):
         return f"Table {self.table_number} ({self.capacity} seats)"
 
 
+# Class: Reservation
 class Reservation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     business = models.ForeignKey('business.Business', on_delete=models.CASCADE, related_name='reservations')
@@ -70,14 +77,17 @@ class Reservation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    # Class: Meta
     class Meta:
         unique_together = ('business', 'reservation_number')
         ordering = ['-reservation_date', '-reservation_time']
 
+    # Method: __str__
     def __str__(self):
         return f"Reservation {self.reservation_number}"
 
 
+# Class: ReservationItem
 class ReservationItem(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, related_name='items')
@@ -85,19 +95,23 @@ class ReservationItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     reserved_price = models.DecimalField(max_digits=12, decimal_places=2)
 
+    # Method: __str__
     def __str__(self):
         return f"{self.quantity}x {self.product.name} (Res: {self.reservation.reservation_number})"
 
 
+# Class: ReservationTable
 class ReservationTable(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, related_name='reserved_tables')
     table = models.ForeignKey(Table, on_delete=models.PROTECT, related_name='reservations')
 
+    # Method: __str__
     def __str__(self):
         return f"{self.table} for {self.reservation}"
 
 
+# Class: ReservationHistory
 class ReservationHistory(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, related_name='history')
@@ -107,8 +121,10 @@ class ReservationHistory(models.Model):
     remarks = models.TextField(blank=True, null=True)
     changed_at = models.DateTimeField(auto_now_add=True)
 
+    # Class: Meta
     class Meta:
         ordering = ['-changed_at']
 
+    # Method: __str__
     def __str__(self):
         return f"{self.reservation.reservation_number}: {self.previous_status} -> {self.new_status}"

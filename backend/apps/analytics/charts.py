@@ -1,9 +1,10 @@
-from django.db.models.functions import TruncDay, TruncWeek, TruncMonth
-from django.db.models import Sum, Count
+from django.db.models.functions import TruncDay
 from typing import Dict, Any, List
 
+# Class: ChartBuilder
 class ChartBuilder:
     @staticmethod
+    # Method: build_time_series
     def build_time_series(queryset, date_field: str, metric_field: str, agg_func, trunc_func=TruncDay) -> List[Dict[str, Any]]:
         """
         Generic method to build time-series chart data.

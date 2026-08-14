@@ -1,23 +1,22 @@
 from rest_framework import permissions
 
+# Class: IsBusinessOwner
 class IsBusinessOwner(permissions.BasePermission):
     """
-    Object-level permission to only allow owners of a business to edit it.
-    Assumes the model instance has an `owner` attribute.
+    Object-level permission to only allow owners of a business or Admin to view or edit it.
     """
+    # Method: has_object_permission
     def has_object_permission(self, request, view, obj):
-        # Read permissions are allowed to any request,
-        # so we'll always allow GET, HEAD or OPTIONS requests.
-        if request.method in permissions.SAFE_METHODS:
-            return True
+        if not request.user or not request.user.is_authenticated:
+            return False
+        return obj.owner == request.user or request.user.is_staff or getattr(request.user, 'role', '') == 'ADMIN'
 
-        # Instance must have an attribute named `owner`.
-        return obj.owner == request.user or request.user.is_staff
-
+# Class: CustomerCannotCreateBusiness
 class CustomerCannotCreateBusiness(permissions.BasePermission):
     """
     Global permission check for blocking customers from creating businesses.
     """
+    # Method: has_permission
     def has_permission(self, request, view):
         if request.method == 'POST':
             # Assuming user role logic exists, e.g. request.user.role

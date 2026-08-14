@@ -5,15 +5,18 @@ from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
+# Class: CustomUserCreationForm
 class CustomUserCreationForm(UserCreationForm):
     """
     A form for creating new users in the Django Admin.
     Uses email as the primary identification field instead of username.
     """
+    # Class: Meta
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('email', 'first_name', 'last_name', 'role')
 
+    # Method: clean_email
     def clean_email(self):
         """
         Validate that the email address is unique.
@@ -26,10 +29,12 @@ class CustomUserCreationForm(UserCreationForm):
             )
         return email
 
+# Class: CustomUserChangeForm
 class CustomUserChangeForm(UserChangeForm):
     """
     A form for updating existing users in the Django Admin.
     """
+    # Class: Meta
     class Meta(UserChangeForm.Meta):
         model = User
         fields = '__all__'

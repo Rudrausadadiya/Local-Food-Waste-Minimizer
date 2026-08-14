@@ -7,11 +7,12 @@ from django.core.exceptions import ValidationError
 
 from .models import (
     NGOVerificationStatus, DonationStatus, DonationRequestStatus,
-    PickupStatus, DonationListing, DonationRequest, DonationPickup, NGO
+    PickupStatus, DonationListing, DonationRequest, DonationPickup, NGO, PickupRoute
 )
 from .repositories import (
     NGORepository, DonationListingRepository, DonationRequestRepository,
-    DonationPickupRepository, DonationHistoryRepository, DonationImpactRepository
+    DonationPickupRepository, DonationHistoryRepository, DonationImpactRepository,
+    PickupRouteRepository
 )
 from .validators import (
     validate_ngo_verified, validate_inventory_for_donation,
@@ -19,15 +20,16 @@ from .validators import (
 )
 from .signals import (
     ngo_registered, ngo_verified, donation_listed, donation_requested,
-    donation_approved, pickup_scheduled, donation_completed, donation_expired,
-    donation_expiring, pickup_reminder, pickup_delayed, impact_calculated
+    donation_approved, pickup_scheduled, donation_completed, impact_calculated
 )
 from apps.inventory.services import InventoryService
 from apps.inventory.models import Inventory
 
+# Class: NGOService
 class NGOService:
     @staticmethod
     @transaction.atomic
+    # Method: register_ngo
     def register_ngo(user, data: Dict[str, Any]) -> NGO:
         data['user'] = user
         ngo = NGORepository.create(data)
@@ -36,18 +38,33 @@ class NGOService:
 
     @staticmethod
     @transaction.atomic
+    # Method: verify_ngo
     def verify_ngo(ngo_id: str, admin_user) -> NGO:
         ngo = NGORepository.get_by_id(ngo_id)
         if not ngo:
             raise ValidationError("NGO not found.")
-        ngo = NGORepository.update(ngo, {'verification_status': NGOVerificationStatus.VERIFIED})
+        ngo = NGORepository.update(ngo, {'verification_status': NGOVerificationStatus.VERIFIED, 'is_active': True})
+        
+        if ngo.user:
+            ngo.user.is_active = True
+            ngo.user.save(update_fields=['is_active'])
+            from apps.business.models import Business
+            biz = Business.objects.filter(owner=ngo.user).first()
+            if biz:
+                biz.business_status = Business.BusinessStatus.APPROVED
+                biz.is_active = True
+                biz.is_verified = True
+                biz.save(update_fields=['business_status', 'is_active', 'is_verified'])
+
         ngo_verified.send(sender=NGOService, ngo=ngo, verifier=admin_user)
         return ngo
 
 
+# Class: DonationService
 class DonationService:
     @staticmethod
     @transaction.atomic
+    # Method: create_listing
     def create_listing(data: Dict[str, Any], user=None) -> DonationListing:
         validate_inventory_for_donation(data['product'], str(data['branch'].id), data['quantity'])
         if 'inventory_batch' in data and data['inventory_batch']:
@@ -64,8 +81,9 @@ class DonationService:
 
     @staticmethod
     @transaction.atomic
+    # Method: convert_from_marketplace
     def convert_from_marketplace(marketplace_listing_id: str, user=None) -> DonationListing:
-        from apps.marketplace.models import MarketplaceListing, ListingStatus
+        from apps.marketplace.models import ListingStatus
         from apps.marketplace.repositories import MarketplaceListingRepository
         from apps.marketplace.services import ListingService
         
@@ -92,14 +110,31 @@ class DonationService:
 
     @staticmethod
     @transaction.atomic
+    # Method: request_donation
     def request_donation(listing_id: str, ngo: NGO, requested_quantity: int) -> DonationRequest:
         validate_ngo_verified(ngo)
         listing = DonationListingRepository.get_by_id_for_update(listing_id)
-        if not listing or listing.donation_status != DonationStatus.ACTIVE:
+        if not listing or listing.donation_status not in [DonationStatus.ACTIVE, DonationStatus.REQUESTED]:
             raise ValidationError("Donation is not available.")
+
+        # Validate 15 km radius between NGO and listing store location
+        if ngo.latitude is not None and ngo.longitude is not None:
+            from common.utils import get_branch_coordinates, validate_15km_radius
+            target_lat, target_lon = get_branch_coordinates(listing.branch)
+            validate_15km_radius(ngo.latitude, ngo.longitude, target_lat, target_lon, entity_name="food donation")
             
         if requested_quantity > listing.quantity:
             raise ValidationError("Requested quantity exceeds available listing quantity.")
+
+        # Prevent NGO from creating duplicate active pending requests for the same listing
+        existing_request = DonationRequest.objects.filter(
+            donation_listing=listing,
+            ngo=ngo,
+            request_status__in=[DonationRequestStatus.PENDING, DonationRequestStatus.APPROVED, DonationRequestStatus.PARTIALLY_APPROVED]
+        ).exists()
+
+        if existing_request:
+            raise ValidationError("Your NGO already has an active request for this food donation listing. Please wait for the merchant to approve or complete your pickup.")
             
         req = DonationRequestRepository.create({
             'donation_listing': listing,
@@ -115,6 +150,7 @@ class DonationService:
 
     @staticmethod
     @transaction.atomic
+    # Method: approve_request
     def approve_request(request_id: str, approved_quantity: int, user=None) -> DonationRequest:
         req = DonationRequestRepository.get_by_id_for_update(request_id)
         if not req or req.request_status != DonationRequestStatus.PENDING:
@@ -153,6 +189,7 @@ class DonationService:
 
     @staticmethod
     @transaction.atomic
+    # Method: schedule_pickup
     def schedule_pickup(request_id: str, pickup_time) -> DonationPickup:
         req = DonationRequestRepository.get_by_id_for_update(request_id)
         if not req or req.request_status not in [DonationRequestStatus.APPROVED, DonationRequestStatus.PARTIALLY_APPROVED]:
@@ -169,6 +206,7 @@ class DonationService:
 
     @staticmethod
     @transaction.atomic
+    # Method: confirm_pickup
     def confirm_pickup(pickup_id: str, user=None) -> DonationPickup:
         pickup = DonationPickupRepository.get_by_id_for_update(pickup_id)
         if not pickup or pickup.pickup_status == PickupStatus.COMPLETED:
@@ -181,7 +219,12 @@ class DonationService:
         inventory = Inventory.objects.filter(product_id=listing.product.id, branch_id=listing.branch.id).first()
         if inventory:
             InventoryService.release_stock(str(inventory.id), Decimal(str(pickup.donation_request.approved_quantity)))
-            InventoryService.deduct_stock(str(inventory.id), Decimal(str(pickup.donation_request.approved_quantity)), reason="DONATION")
+            InventoryService.stock_out(
+                inventory_id=str(inventory.id),
+                quantity=Decimal(str(pickup.donation_request.approved_quantity)),
+                user_id=str(user.id) if user and getattr(user, 'id', None) else None,
+                remarks="Donation pickup completed"
+            )
 
         pickup.pickup_status = PickupStatus.COMPLETED
         pickup.save()
@@ -208,9 +251,11 @@ class DonationService:
         return pickup
 
 
+# Class: MatchingService
 class MatchingService:
     @staticmethod
-    def get_nearby_ngos(latitude: float, longitude: float, max_distance_km: float = 50.0) -> List[NGO]:
+    # Method: get_nearby_ngos
+    def get_nearby_ngos(latitude: float, longitude: float, max_distance_km: float = 15.0) -> List[NGO]:
         """
         Placeholder for AI-based Matching. Currently uses simple Haversine formula logic.
         """
@@ -242,3 +287,60 @@ class MatchingService:
                 matched_ngos.append(ngo)
                 
         return sorted(matched_ngos, key=lambda x: x.calculated_distance)
+
+
+# Class: PickupRouteService
+class PickupRouteService:
+    @staticmethod
+    @transaction.atomic
+    # Method: create_route
+    def create_route(ngo: NGO, pickup_ids: list, route_date, driver_name: str = None) -> PickupRoute:
+        from apps.marketplace.models import MarketplaceOrder, MarketplaceOrderStatus
+        
+        pickups = DonationPickup.objects.filter(
+            id__in=pickup_ids,
+            donation_request__ngo=ngo,
+            pickup_status=PickupStatus.SCHEDULED,
+        )
+        
+        m_orders = MarketplaceOrder.objects.filter(
+            id__in=pickup_ids,
+            customer__user=ngo.user,
+            status=MarketplaceOrderStatus.PENDING,
+        )
+        
+        if pickups.count() + m_orders.count() != len(pickup_ids):
+            raise ValidationError("One or more pickups/orders are invalid, already completed, or don't belong to this NGO.")
+
+        if ngo.latitude is not None and ngo.longitude is not None:
+            from common.utils import get_branch_coordinates, calculate_haversine_distance_km
+            ngo_lat = float(ngo.latitude)
+            ngo_lon = float(ngo.longitude)
+
+            # Method: get_dist_pickup
+            def get_dist_pickup(p):
+                branch = p.donation_request.donation_listing.branch
+                b_lat, b_lon = get_branch_coordinates(branch)
+                if b_lat is not None and b_lon is not None:
+                    return calculate_haversine_distance_km(ngo_lat, ngo_lon, b_lat, b_lon)
+                return 0.0
+                
+            # Method: get_dist_order
+            def get_dist_order(o):
+                branch = o.listing.branch
+                b_lat, b_lon = get_branch_coordinates(branch)
+                if b_lat is not None and b_lon is not None:
+                    return calculate_haversine_distance_km(ngo_lat, ngo_lon, b_lat, b_lon)
+                return 0.0
+
+            pickups_list = sorted(list(pickups), key=get_dist_pickup)
+            orders_list = sorted(list(m_orders), key=get_dist_order)
+        else:
+            pickups_list = list(pickups)
+            orders_list = list(m_orders)
+
+        route = PickupRouteRepository.create({'ngo': ngo, 'route_date': route_date, 'driver_name': driver_name})
+        route.pickups.set(pickups_list)
+        route.marketplace_orders.set(orders_list)
+        return route
+

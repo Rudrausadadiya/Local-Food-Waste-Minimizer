@@ -1,10 +1,13 @@
 from django.apps import AppConfig
 
 
+# Class: OrdersConfig
 class OrdersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'apps.orders'
     verbose_name = 'Order & Sales Management'
 
+    # Method: ready
     def ready(self):
-        import apps.orders.signals  # noqa: F401
+        import importlib
+        importlib.import_module('apps.orders.signals')

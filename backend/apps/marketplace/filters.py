@@ -1,6 +1,7 @@
 import django_filters
 from .models import MarketplaceListing
 
+# Class: MarketplaceListingFilter
 class MarketplaceListingFilter(django_filters.FilterSet):
     min_price = django_filters.NumberFilter(field_name="discounted_price", lookup_expr='gte')
     max_price = django_filters.NumberFilter(field_name="discounted_price", lookup_expr='lte')
@@ -10,6 +11,7 @@ class MarketplaceListingFilter(django_filters.FilterSet):
     # We allow filtering by category through the product relationship
     category = django_filters.CharFilter(field_name='product__category__name', lookup_expr='icontains')
     
+    # Class: Meta
     class Meta:
         model = MarketplaceListing
         fields = [

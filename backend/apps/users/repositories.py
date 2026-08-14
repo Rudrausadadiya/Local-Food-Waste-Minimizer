@@ -4,6 +4,7 @@ from django.db import transaction
 from django.core.exceptions import ObjectDoesNotExist
 from apps.users.models import User
 
+# Class: UserRepository
 class UserRepository:
     """
     Repository layer for the User model.
@@ -12,6 +13,7 @@ class UserRepository:
     """
 
     @staticmethod
+    # Method: get_by_id
     def get_by_id(user_id: uuid.UUID) -> Optional[User]:
         """
         Retrieve a user by their UUID.
@@ -31,6 +33,7 @@ class UserRepository:
             return None
 
     @staticmethod
+    # Method: get_by_email
     def get_by_email(email: str) -> Optional[User]:
         """
         Retrieve a user by their email address.
@@ -48,6 +51,7 @@ class UserRepository:
 
     @staticmethod
     @transaction.atomic
+    # Method: create_user
     def create_user(
         email: str, 
         password: str, 
@@ -80,6 +84,7 @@ class UserRepository:
 
     @staticmethod
     @transaction.atomic
+    # Method: update_user
     def update_user(user: User, data: Dict[str, Any]) -> User:
         """
         Update a user's attributes.
@@ -105,6 +110,7 @@ class UserRepository:
 
     @staticmethod
     @transaction.atomic
+    # Method: deactivate_user
     def deactivate_user(user: User) -> User:
         """
         Deactivate a user account (soft delete).
@@ -122,6 +128,7 @@ class UserRepository:
 
     @staticmethod
     @transaction.atomic
+    # Method: activate_user
     def activate_user(user: User) -> User:
         """
         Activate a user account.
@@ -139,6 +146,7 @@ class UserRepository:
 
     @staticmethod
     @transaction.atomic
+    # Method: update_password
     def update_password(user: User, raw_password: str) -> User:
         """
         Update a user's password securely.
@@ -156,6 +164,7 @@ class UserRepository:
 
     @staticmethod
     @transaction.atomic
+    # Method: verify_email
     def verify_email(user: User) -> User:
         """
         Mark a user's email as verified.

@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
+# Class: UsersConfig
 class UsersConfig(AppConfig):
     """
     Django application configuration for the users app.

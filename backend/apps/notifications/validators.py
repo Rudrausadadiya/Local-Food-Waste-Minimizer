@@ -1,8 +1,6 @@
 from django.utils import timezone
-from datetime import datetime, time
-import pytz
-from django.core.exceptions import ValidationError
 
+# Function: validate_quiet_hours
 def validate_quiet_hours(pref, scheduled_at=None):
     """
     Returns True if the current or scheduled time is during quiet hours.
@@ -21,6 +19,7 @@ def validate_quiet_hours(pref, scheduled_at=None):
     else: # Crosses midnight
         return check_time >= start or check_time <= end
 
+# Function: is_channel_enabled
 def is_channel_enabled(pref, channel: str, event_type: str = None) -> bool:
     """
     Validates if the user allows the channel globally or per-event.

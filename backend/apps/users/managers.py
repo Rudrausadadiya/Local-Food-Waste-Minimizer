@@ -3,12 +3,14 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from typing import Any, Optional
 
+# Class: UserManager
 class UserManager(BaseUserManager):
     """
     Custom user model manager where email is the unique identifiers
     for authentication instead of usernames.
     """
 
+    # Method: create_user
     def create_user(self, email: str, password: Optional[str] = None, **extra_fields: Any) -> Any:
         """
         Create and save a user with the given email and password.
@@ -45,6 +47,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    # Method: create_superuser
     def create_superuser(self, email: str, password: Optional[str] = None, **extra_fields: Any) -> Any:
         """
         Create and save a SuperUser with the given email and password.

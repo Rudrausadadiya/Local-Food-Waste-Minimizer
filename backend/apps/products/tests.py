@@ -10,7 +10,9 @@ try:
 except Exception:
     User = None
 
+# Class: ProductServiceTests
 class ProductServiceTests(TestCase):
+    # Method: setUp
     def setUp(self):
         if not User:
             return
@@ -23,6 +25,7 @@ class ProductServiceTests(TestCase):
             business_email='biz@example.com'
         )
 
+    # Method: test_create_category
     def test_create_category(self):
         if not User:
             return
@@ -35,6 +38,7 @@ class ProductServiceTests(TestCase):
         self.assertEqual(category.name, 'Electronics')
         self.assertEqual(category.slug, 'electronics')
 
+    # Method: test_create_product
     def test_create_product(self):
         if not User:
             return
@@ -51,6 +55,7 @@ class ProductServiceTests(TestCase):
         self.assertEqual(product.product_name, 'Apple')
         self.assertEqual(product.selling_price, 10.00)
 
+    # Method: test_soft_delete_product
     def test_soft_delete_product(self):
         if not User:
             return

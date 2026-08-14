@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from .models import OrderStatus
 
+# Function: validate_order_modifiable
 def validate_order_modifiable(order):
     if order.order_status == OrderStatus.COMPLETED:
         raise ValidationError("Cannot modify completed orders.")

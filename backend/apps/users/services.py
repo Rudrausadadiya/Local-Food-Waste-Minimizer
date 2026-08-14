@@ -12,11 +12,11 @@ from apps.users.exceptions import (
     UserNotFound, 
     UserAlreadyExists, 
     InvalidCredentials,
-    EmailNotVerified,
     AccountInactive
 )
 from apps.users.choices import UserRole
 
+# Class: AuthService
 class AuthService:
     """
     Service layer handling authentication, registration, and account recovery.
@@ -25,7 +25,18 @@ class AuthService:
 
     @staticmethod
     @transaction.atomic
-    def register(email: str, password: str, first_name: str, last_name: str, role: str = UserRole.CUSTOMER) -> User:
+    # Method: register
+    def register(
+        email: str, 
+        password: str, 
+        first_name: str, 
+        last_name: str, 
+        role: str = UserRole.CUSTOMER,
+        business_name: str = None,
+        business_type: str = None,
+        registration_number: str = None,
+        gst_number: str = None
+    ) -> User:
         """
         Register a new user in the system.
         
@@ -35,6 +46,10 @@ class AuthService:
             first_name (str): User's first name.
             last_name (str): User's last name.
             role (str, optional): User's role. Defaults to CUSTOMER.
+            business_name (str, optional): Business or NGO name.
+            business_type (str, optional): Specific business type.
+            registration_number (str, optional): FSSAI / Darpan registration ID.
+            gst_number (str, optional): GSTIN / 80G tax cert ID.
             
         Returns:
             User: The newly registered user.
@@ -54,11 +69,57 @@ class AuthService:
             role=role
         )
         
-        # In a real scenario, trigger a celery task to send a verification email here.
+        if role in [UserRole.VENDOR, UserRole.NGO]:
+            from apps.business.models import Business, Branch
+            from django.utils.text import slugify
+
+            b_name = (business_name or '').strip() or (f"{first_name}'s Store" if first_name else "Merchant")
+            b_type = business_type if business_type else (Business.BusinessType.NGO if role == UserRole.NGO else Business.BusinessType.VENDOR)
+            
+            slug = slugify(b_name)
+            if Business.objects.filter(slug=slug).exists():
+                slug = f"{slug}-{uuid.uuid4().hex[:6]}"
+                
+            biz = Business.objects.create(
+                owner=user,
+                business_name=b_name,
+                slug=slug,
+                business_type=b_type,
+                business_status=Business.BusinessStatus.PENDING,
+                business_email=email,
+                business_phone=getattr(user, 'phone_number', '') or '',
+                registration_number=registration_number or '',
+                gst_number=gst_number or '',
+                is_active=True,
+                is_verified=False
+            )
+            
+            Branch.objects.create(
+                business=biz,
+                branch_name=f"{biz.business_name} Main Branch",
+                branch_code=f"BR-{uuid.uuid4().hex[:6].upper()}",
+                is_main_branch=True,
+                branch_status=Branch.BranchStatus.ACTIVE
+            )
+
+            if role == UserRole.NGO:
+                from apps.donations.models import NGO, NGOVerificationStatus
+                NGO.objects.create(
+                    user=user,
+                    organization_name=b_name,
+                    registration_number=registration_number or f"NGO-{uuid.uuid4().hex[:6].upper()}",
+                    contact_person=user.full_name,
+                    email=email,
+                    phone=getattr(user, 'phone_number', '') or '',
+                    address='',
+                    verification_status=NGOVerificationStatus.PENDING,
+                    is_active=True
+                )
         
         return user
 
     @staticmethod
+    # Method: login
     def login(email: str, password: str) -> Tuple[User, Dict[str, str]]:
         """
         Authenticate a user and return JWT tokens.
@@ -73,19 +134,29 @@ class AuthService:
         Raises:
             InvalidCredentials: If authentication fails.
             AccountInactive: If the user's account is deactivated.
-            EmailNotVerified: If the user hasn't verified their email (optional business rule).
         """
         user = authenticate(email=email, password=password)
         
         if not user:
+            existing_user = User.objects.filter(email=email).first()
+            if existing_user and existing_user.check_password(password) and not existing_user.is_active:
+                raise AccountInactive("Your account verification has been revoked by admin.")
             raise InvalidCredentials()
             
         if not user.is_active:
-            raise AccountInactive()
+            raise AccountInactive("Your account verification has been revoked by admin.")
             
-        # Optional: Require email verification before login
-        # if not user.is_email_verified:
-        #     raise EmailNotVerified()
+        if user.role in [UserRole.VENDOR, UserRole.NGO]:
+            biz = user.businesses.filter(is_deleted=False).first()
+            if biz:
+                if not biz.is_verified:
+                    raise AccountInactive("Your account verification has been revoked by admin.")
+                if biz.business_status == 'SUSPENDED':
+                    raise AccountInactive("Your account has been suspended by admin.")
+                elif biz.business_status == 'REJECTED':
+                    raise InvalidCredentials("Your business registration was rejected by admin.")
+                elif biz.business_status == 'PENDING':
+                    raise AccountInactive("Your account is pending admin approval.")
 
         refresh = RefreshToken.for_user(user)
         tokens = {
@@ -97,6 +168,7 @@ class AuthService:
 
     @staticmethod
     @transaction.atomic
+    # Method: verify_email
     def verify_email(uidb64: str, token: str) -> User:
         """
         Mark a user's email as verified via a cryptographic token.
@@ -123,6 +195,7 @@ class AuthService:
         return UserRepository.verify_email(user)
 
     @staticmethod
+    # Method: request_password_reset
     def request_password_reset(email: str) -> None:
         """
         Initiate a password reset process.
@@ -140,6 +213,7 @@ class AuthService:
 
     @staticmethod
     @transaction.atomic
+    # Method: reset_password
     def reset_password(uidb64: str, token: str, new_password: str) -> User:
         """
         Reset a user's password securely via token.
@@ -167,6 +241,7 @@ class AuthService:
         return UserRepository.update_password(user, new_password)
 
 
+# Class: UserService
 class UserService:
     """
     Service layer handling user profile management, role assignment, and status updates.
@@ -174,6 +249,7 @@ class UserService:
 
     @staticmethod
     @transaction.atomic
+    # Method: update_profile
     def update_profile(user_id: uuid.UUID, update_data: Dict[str, Any]) -> User:
         """
         Update a user's profile information.
@@ -189,7 +265,7 @@ class UserService:
             UserNotFound: If the user does not exist.
         """
         # Ensure we don't accidentally update sensitive fields through this method
-        safe_fields = {'first_name', 'last_name', 'phone_number'}
+        safe_fields = {'first_name', 'last_name', 'phone_number', 'profile_image'}
         filtered_data = {k: v for k, v in update_data.items() if k in safe_fields}
 
         user = UserRepository.get_by_id(user_id)
@@ -200,6 +276,7 @@ class UserService:
 
     @staticmethod
     @transaction.atomic
+    # Method: change_password
     def change_password(user_id: uuid.UUID, old_password: str, new_password: str) -> User:
         """
         Change a user's password when they are already authenticated.
@@ -227,6 +304,7 @@ class UserService:
 
     @staticmethod
     @transaction.atomic
+    # Method: assign_role
     def assign_role(user_id: uuid.UUID, new_role: str) -> User:
         """
         Assign a new role to a user.
@@ -253,6 +331,7 @@ class UserService:
 
     @staticmethod
     @transaction.atomic
+    # Method: deactivate_account
     def deactivate_account(user_id: uuid.UUID) -> User:
         """
         Deactivate a user's account.
@@ -274,6 +353,7 @@ class UserService:
 
     @staticmethod
     @transaction.atomic
+    # Method: activate_account
     def activate_account(user_id: uuid.UUID) -> User:
         """
         Activate a user's account.

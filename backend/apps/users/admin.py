@@ -3,9 +3,10 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 from apps.users.models import User
 from apps.users.forms import CustomUserCreationForm, CustomUserChangeForm
-from typing import Tuple, List, Dict, Any, Optional
+from typing import Tuple, Dict, Any, Optional
 
 @admin.register(User)
+# Class: UserAdmin
 class UserAdmin(BaseUserAdmin):
     """
     Admin interface for the custom User model.
@@ -77,3 +78,24 @@ class UserAdmin(BaseUserAdmin):
     
     # Customizes the ordering of fields in the search results
     search_help_text = _("Search by email, first name, last name, or phone number.")
+
+    # Method: save_model
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if change and 'is_active' in form.changed_data:
+            from apps.business.models import Business
+            from apps.donations.models import NGO, NGOVerificationStatus
+            
+            if obj.role in ['VENDOR', 'NGO']:
+                biz_status = Business.BusinessStatus.APPROVED if obj.is_active else Business.BusinessStatus.SUSPENDED
+                Business.objects.filter(owner=obj).update(
+                    business_status=biz_status,
+                    is_active=obj.is_active,
+                    is_verified=obj.is_active
+                )
+                if obj.role == 'NGO':
+                    ngo_status = NGOVerificationStatus.VERIFIED if obj.is_active else NGOVerificationStatus.REJECTED
+                    NGO.objects.filter(user=obj).update(
+                        verification_status=ngo_status,
+                        is_active=obj.is_active
+                    )

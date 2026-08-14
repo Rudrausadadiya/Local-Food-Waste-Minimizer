@@ -1,34 +1,49 @@
 from rest_framework import permissions
 
+# Class: IsAdminUserOrReadOnly
 class IsAdminUserOrReadOnly(permissions.IsAdminUser):
+    # Method: has_permission
     def has_permission(self, request, view):
         is_admin = super().has_permission(request, view)
         return request.method in permissions.SAFE_METHODS or is_admin
 
+# Class: IsBusinessOwner
 class IsBusinessOwner(permissions.BasePermission):
+    # Method: has_permission
     def has_permission(self, request, view):
         return request.user.is_authenticated and hasattr(request.user, 'role') and request.user.role == 'BUSINESS_OWNER'
 
+    # Method: has_object_permission
     def has_object_permission(self, request, view, obj):
         return hasattr(obj, 'business') and obj.business.owner == request.user
 
+# Class: IsCashier
 class IsCashier(permissions.BasePermission):
+    # Method: has_permission
     def has_permission(self, request, view):
         return request.user.is_authenticated and hasattr(request.user, 'role') and request.user.role == 'CASHIER'
 
+# Class: IsSalesManager
 class IsSalesManager(permissions.BasePermission):
+    # Method: has_permission
     def has_permission(self, request, view):
         return request.user.is_authenticated and hasattr(request.user, 'role') and request.user.role == 'SALES_MANAGER'
 
+# Class: IsBranchManager
 class IsBranchManager(permissions.BasePermission):
+    # Method: has_permission
     def has_permission(self, request, view):
         return request.user.is_authenticated and hasattr(request.user, 'role') and request.user.role == 'BRANCH_MANAGER'
 
+# Class: IsCustomerReadOnly
 class IsCustomerReadOnly(permissions.BasePermission):
+    # Method: has_permission
     def has_permission(self, request, view):
         return request.user.is_authenticated and hasattr(request.user, 'role') and request.user.role == 'CUSTOMER' and request.method in permissions.SAFE_METHODS
 
+# Class: HasOrderManagementPermission
 class HasOrderManagementPermission(permissions.BasePermission):
+    # Method: has_permission
     def has_permission(self, request, view):
         if not request.user.is_authenticated:
             return False

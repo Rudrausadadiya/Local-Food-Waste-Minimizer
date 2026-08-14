@@ -10,6 +10,7 @@ from .services import ReservationService
 from .filters import ReservationFilter
 from .permissions import HasReservationManagementPermission
 
+# Class: TableViewSet
 class TableViewSet(viewsets.ModelViewSet):
     queryset = Table.objects.filter(is_active=True)
     serializer_class = TableSerializer
@@ -17,6 +18,7 @@ class TableViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['business', 'branch']
 
+# Class: ReservationViewSet
 class ReservationViewSet(viewsets.ModelViewSet):
     queryset = Reservation.objects.filter(is_deleted=False)
     permission_classes = [HasReservationManagementPermission]
@@ -29,12 +31,14 @@ class ReservationViewSet(viewsets.ModelViewSet):
     ordering_fields = ['created_at', 'reservation_date', 'party_size']
     ordering = ['-created_at']
 
+    # Method: get_serializer_class
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
             return ReservationWriteSerializer
         return ReservationReadSerializer
 
     @action(detail=True, methods=['post'])
+    # Method: confirm
     def confirm(self, request, pk=None):
         try:
             reservation = ReservationService.confirm_reservation(str(pk), user=request.user)
@@ -44,6 +48,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
             return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['post'])
+    # Method: cancel
     def cancel(self, request, pk=None):
         try:
             remarks = request.data.get('remarks', 'User cancelled via API.')
@@ -54,6 +59,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
             return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['post'])
+    # Method: convert_to_order
     def convert_to_order(self, request, pk=None):
         try:
             order = ReservationService.convert_to_order(str(pk), user=request.user)

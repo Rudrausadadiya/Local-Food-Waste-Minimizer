@@ -2,23 +2,29 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from common.models import UUIDTimeStampedModel
-import uuid
 
+# Class: SoftDeleteManager
 class SoftDeleteManager(models.Manager):
+    # Method: get_queryset
     def get_queryset(self):
         return super().get_queryset().filter(is_deleted=False)
 
+# Class: ActiveManager
 class ActiveManager(models.Manager):
+    # Method: get_queryset
     def get_queryset(self):
         return super().get_queryset().filter(is_deleted=False, is_active=True)
 
+# Class: Business
 class Business(UUIDTimeStampedModel):
+    # Class: BusinessType
     class BusinessType(models.TextChoices):
         VENDOR = 'VENDOR', 'Vendor'
         NGO = 'NGO', 'NGO'
         CORPORATE = 'CORPORATE', 'Corporate'
         RETAIL = 'RETAIL', 'Retail'
 
+    # Class: BusinessStatus
     class BusinessStatus(models.TextChoices):
         PENDING = 'PENDING', 'Pending'
         APPROVED = 'APPROVED', 'Approved'
@@ -29,7 +35,7 @@ class Business(UUIDTimeStampedModel):
     business_name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     business_type = models.CharField(max_length=50, choices=BusinessType.choices)
-    business_status = models.CharField(max_length=50, choices=BusinessStatus.choices, default=BusinessStatus.PENDING)
+    business_status = models.CharField(max_length=50, choices=BusinessStatus.choices, default=BusinessStatus.APPROVED)
     
     business_email = models.EmailField(unique=True)
     business_phone = models.CharField(max_length=20)
@@ -62,20 +68,25 @@ class Business(UUIDTimeStampedModel):
     available_objects = SoftDeleteManager()
     active_objects = ActiveManager()
 
+    # Method: soft_delete
     def soft_delete(self):
         self.is_deleted = True
         self.deleted_at = timezone.now()
         self.save()
 
+    # Method: __str__
     def __str__(self):
         return self.business_name
 
+    # Method: save
     def save(self, *args, **kwargs):
         # Audit hook placeholder
         # e.g., AuditService.log_change(self)
         super().save(*args, **kwargs)
 
+# Class: Address
 class Address(UUIDTimeStampedModel):
+    # Class: AddressType
     class AddressType(models.TextChoices):
         BILLING = 'BILLING', 'Billing'
         SHIPPING = 'SHIPPING', 'Shipping'
@@ -94,10 +105,13 @@ class Address(UUIDTimeStampedModel):
     longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
     is_default = models.BooleanField(default=False)
 
+    # Method: __str__
     def __str__(self):
         return f"{self.address_line_1}, {self.city}"
 
+# Class: Branch
 class Branch(UUIDTimeStampedModel):
+    # Class: BranchStatus
     class BranchStatus(models.TextChoices):
         ACTIVE = 'ACTIVE', 'Active'
         INACTIVE = 'INACTIVE', 'Inactive'
@@ -115,10 +129,13 @@ class Branch(UUIDTimeStampedModel):
     opening_date = models.DateField(blank=True, null=True)
     closing_date = models.DateField(blank=True, null=True)
 
+    # Method: __str__
     def __str__(self):
         return self.branch_name
 
+# Class: OperatingHours
 class OperatingHours(UUIDTimeStampedModel):
+    # Class: Weekday
     class Weekday(models.IntegerChoices):
         MONDAY = 0, 'Monday'
         TUESDAY = 1, 'Tuesday'
@@ -134,8 +151,10 @@ class OperatingHours(UUIDTimeStampedModel):
     closing_time = models.TimeField(blank=True, null=True)
     is_closed = models.BooleanField(default=False)
 
+    # Class: Meta
     class Meta:
         unique_together = ('business', 'weekday')
 
+    # Method: __str__
     def __str__(self):
         return f"{self.business.business_name} - {self.get_weekday_display()}"

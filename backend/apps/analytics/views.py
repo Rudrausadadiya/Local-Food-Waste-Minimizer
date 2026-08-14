@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status, filters
+from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -12,9 +12,11 @@ from .services import DashboardService, ReportService, DataQualityService, Datas
 from .filters import ScheduledReportFilter, AnalyticsExportLogFilter
 from .permissions import IsAnalyticsViewer, IsAnalyticsAdmin
 
+# Class: DashboardViewSet
 class DashboardViewSet(viewsets.ViewSet):
     permission_classes = [IsAnalyticsViewer]
 
+    # Method: list
     def list(self, request):
         start_date_str = request.query_params.get('start_date')
         end_date_str = request.query_params.get('end_date')
@@ -33,16 +35,19 @@ class DashboardViewSet(viewsets.ViewSet):
         return Response(kpis)
 
     @action(detail=False, methods=['get'])
+    # Method: data_quality
     def data_quality(self, request):
         business_id = request.query_params.get('business_id')
         anomalies = DataQualityService.detect_anomalies(business_id)
         return Response(anomalies)
 
 
+# Class: ReportViewSet
 class ReportViewSet(viewsets.ViewSet):
     permission_classes = [IsAnalyticsViewer]
 
     @action(detail=False, methods=['get'])
+    # Method: download
     def download(self, request):
         report_type = request.query_params.get('report_type', 'SALES')
         export_format = request.query_params.get('export_format', 'CSV')
@@ -71,7 +76,8 @@ class ReportViewSet(viewsets.ViewSet):
         response['Content-Disposition'] = f'attachment; filename="{report_type}.{export_format.lower()}"'
         return response
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['get'], permission_classes=[IsAnalyticsAdmin])
+    # Method: ml_dataset
     def ml_dataset(self, request):
         model_type = request.query_params.get('model_type', 'FORECAST')
         business_id = request.query_params.get('business_id')
@@ -82,12 +88,14 @@ class ReportViewSet(viewsets.ViewSet):
         return response
 
 
+# Class: ScheduledReportViewSet
 class ScheduledReportViewSet(viewsets.ModelViewSet):
     serializer_class = ScheduledReportSerializer
     permission_classes = [IsAnalyticsViewer]
     filter_backends = [DjangoFilterBackend]
     filterset_class = ScheduledReportFilter
 
+    # Method: get_queryset
     def get_queryset(self):
         user = self.request.user
         if not user.is_authenticated:
@@ -96,16 +104,19 @@ class ScheduledReportViewSet(viewsets.ModelViewSet):
             return ScheduledReport.objects.all()
         return ScheduledReport.objects.filter(user=user)
 
+    # Method: perform_create
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
 
+# Class: AnalyticsExportLogViewSet
 class AnalyticsExportLogViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AnalyticsExportLogSerializer
     permission_classes = [IsAnalyticsViewer]
     filter_backends = [DjangoFilterBackend]
     filterset_class = AnalyticsExportLogFilter
 
+    # Method: get_queryset
     def get_queryset(self):
         user = self.request.user
         if not user.is_authenticated:

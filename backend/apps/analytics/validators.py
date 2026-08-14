@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
-from django.utils import timezone
 
+# Function: validate_date_range
 def validate_date_range(start_date, end_date):
     if start_date and end_date:
         if start_date > end_date:

@@ -18,4 +18,8 @@ urlpatterns = [
     
     # Profile Endpoints
     path('profile/', views.ProfileAPIView.as_view(), name='profile'),
+
+    # Admin User Management Endpoints
+    path('admin/users/', views.AdminUserListView.as_view(), name='admin_user_list'),
+    path('admin/users/<uuid:user_id>/toggle/', views.AdminUserToggleView.as_view(), name='admin_user_toggle'),
 ]

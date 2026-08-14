@@ -2,8 +2,10 @@ from decimal import Decimal
 from typing import Dict, Any
 from .repositories import CrossModuleAnalyticsRepository
 
+# Class: DashboardKPIBuilder
 class DashboardKPIBuilder:
     @staticmethod
+    # Method: get_executive_kpis
     def get_executive_kpis(start_date, end_date, business_id: str = None) -> Dict[str, Any]:
         sales = CrossModuleAnalyticsRepository.get_sales_summary(start_date, end_date, business_id)
         inventory = CrossModuleAnalyticsRepository.get_inventory_summary(business_id)

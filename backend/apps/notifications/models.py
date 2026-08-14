@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
+# Class: NotificationChannel
 class NotificationChannel(models.TextChoices):
     IN_APP = 'IN_APP', _('In-App')
     EMAIL = 'EMAIL', _('Email')
@@ -10,23 +11,27 @@ class NotificationChannel(models.TextChoices):
     PUSH = 'PUSH', _('Push Notification')
     WEBHOOK = 'WEBHOOK', _('Webhook')
 
+# Class: NotificationStatus
 class NotificationStatus(models.TextChoices):
     PENDING = 'PENDING', _('Pending')
     SENT = 'SENT', _('Sent')
     FAILED = 'FAILED', _('Failed')
     SCHEDULED = 'SCHEDULED', _('Scheduled')
 
+# Class: NotificationPriority
 class NotificationPriority(models.TextChoices):
     LOW = 'LOW', _('Low')
     MEDIUM = 'MEDIUM', _('Medium')
     HIGH = 'HIGH', _('High')
     URGENT = 'URGENT', _('Urgent')
 
+# Class: DigestMode
 class DigestMode(models.TextChoices):
     IMMEDIATE = 'IMMEDIATE', _('Immediate')
     HOURLY = 'HOURLY', _('Hourly')
     DAILY = 'DAILY', _('Daily')
 
+# Class: NotificationCategory
 class NotificationCategory(models.TextChoices):
     AUTHENTICATION = 'AUTHENTICATION', _('Authentication')
     BUSINESS = 'BUSINESS', _('Business')
@@ -37,6 +42,7 @@ class NotificationCategory(models.TextChoices):
     DONATIONS = 'DONATIONS', _('Donations')
     SYSTEM = 'SYSTEM', _('System')
 
+# Class: NotificationPreference
 class NotificationPreference(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notification_preference')
@@ -54,10 +60,12 @@ class NotificationPreference(models.Model):
     quiet_hours_start = models.TimeField(null=True, blank=True)
     quiet_hours_end = models.TimeField(null=True, blank=True)
 
+    # Method: __str__
     def __str__(self):
         return f"Preferences for {self.user.email}"
 
 
+# Class: NotificationTemplate
 class NotificationTemplate(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
@@ -70,10 +78,12 @@ class NotificationTemplate(models.Model):
     language = models.CharField(max_length=10, default='en')
     is_active = models.BooleanField(default=True)
 
+    # Method: __str__
     def __str__(self):
         return f"Template: {self.name} ({self.language})"
 
 
+# Class: Notification
 class Notification(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications')
@@ -106,13 +116,16 @@ class Notification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    # Class: Meta
     class Meta:
         ordering = ['-created_at']
 
+    # Method: __str__
     def __str__(self):
         return f"{self.title} to {self.recipient.email}"
 
 
+# Class: NotificationLog
 class NotificationLog(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     notification = models.ForeignKey(Notification, on_delete=models.CASCADE, related_name='logs')
@@ -133,8 +146,10 @@ class NotificationLog(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # Class: Meta
     class Meta:
         ordering = ['-created_at']
 
+    # Method: __str__
     def __str__(self):
         return f"Log for {self.notification.id} via {self.provider}"

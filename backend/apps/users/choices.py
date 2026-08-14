@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+# Class: UserRole
 class UserRole(models.TextChoices):
     """
     Defines the available roles for users in the system.

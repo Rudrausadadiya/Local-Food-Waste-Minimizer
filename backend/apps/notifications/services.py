@@ -2,8 +2,8 @@ from typing import Dict, Any, List
 from django.utils import timezone
 from django.db import transaction
 from .models import (
-    Notification, NotificationLog, NotificationChannel, NotificationStatus,
-    NotificationPriority, NotificationCategory, DigestMode
+    Notification, NotificationChannel, NotificationStatus,
+    NotificationPriority, DigestMode
 )
 from .repositories import (
     NotificationRepository, NotificationPreferenceRepository, 
@@ -16,8 +16,10 @@ from .sms import SMSProvider
 from .push import PushProvider
 from .webhook import WebhookProvider
 
+# Class: NotificationPriorityService
 class NotificationPriorityService:
     @staticmethod
+    # Method: calculate_priority
     def calculate_priority(event_type: str, recipient) -> str:
         # Future AI placeholder logic implementation
         critical_events = ['ORDER_CREATED', 'RESERVATION_CONFIRMED', 'DONATION_APPROVED']
@@ -31,9 +33,11 @@ class NotificationPriorityService:
         return NotificationPriority.MEDIUM
 
 
+# Class: NotificationService
 class NotificationService:
     @staticmethod
     @transaction.atomic
+    # Method: dispatch_event
     def dispatch_event(user, event_type: str, context: Dict[str, Any], related_object=None, channels: List[str] = None):
         """
         Main entry point for generating notifications from signals.
@@ -102,6 +106,7 @@ class NotificationService:
         return created_notifications
 
     @staticmethod
+    # Method: process_queue
     def process_queue(limit: int = 100):
         """
         Intended for Celery beat: Grabs pending notifications and sends them.
@@ -111,6 +116,7 @@ class NotificationService:
             NotificationService._send_single(notif)
 
     @staticmethod
+    # Method: _send_single
     def _send_single(notification: Notification):
         success = False
         error_msg = ""
@@ -138,7 +144,7 @@ class NotificationService:
             success = False
             error_msg = str(e)
             
-        log = NotificationLogRepository.create({
+        NotificationLogRepository.create({
             'notification': notification,
             'channel': notification.channel,
             'provider': provider_name,
@@ -157,6 +163,7 @@ class NotificationService:
         return success
 
     @staticmethod
+    # Method: retry_failed
     def retry_failed():
         """
         Retry failed deliveries up to 3 times.
@@ -171,6 +178,7 @@ class NotificationService:
                 NotificationRepository.update(notif, {'is_archived': True})
 
     @staticmethod
+    # Method: mark_as_read
     def mark_as_read(notification_id: str, user):
         notif = NotificationRepository.get_by_id(notification_id)
         if notif and notif.recipient == user:
@@ -182,8 +190,10 @@ class NotificationService:
             return notif
         return None
 
+# Class: NotificationPreferenceService
 class NotificationPreferenceService:
     @staticmethod
+    # Method: update_preferences
     def update_preferences(user, data: Dict[str, Any]):
         pref = NotificationPreferenceRepository.get_or_create(user)
         return NotificationPreferenceRepository.update(pref, data)

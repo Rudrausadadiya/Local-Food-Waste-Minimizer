@@ -12,19 +12,30 @@ from .repositories import (
 from .validators import validate_product_active, validate_reservation_modifiable
 from .signals import (
     reservation_created, reservation_confirmed, reservation_cancelled,
-    reservation_completed, reservation_expired, reservation_converted_to_order
+    reservation_expired, reservation_converted_to_order
 )
 from apps.inventory.services import InventoryService
 from apps.inventory.models import Inventory
 from apps.orders.services import OrderService
 
 
+# Class: ReservationService
 class ReservationService:
     @staticmethod
     @transaction.atomic
+    # Method: create_reservation
     def create_reservation(reservation_data: Dict[str, Any], items_data: List[Dict[str, Any]] = None, tables_data: List[Dict[str, Any]] = None, user=None) -> Reservation:
         items_data = items_data or []
         tables_data = tables_data or []
+
+        # Validate 15 km radius between user location and branch
+        user_lat = reservation_data.pop('user_lat', None) or reservation_data.pop('latitude', None)
+        user_lon = reservation_data.pop('user_lon', None) or reservation_data.pop('longitude', None)
+        branch = reservation_data.get('branch')
+        if branch:
+            from common.utils import get_branch_coordinates, validate_15km_radius
+            target_lat, target_lon = get_branch_coordinates(branch)
+            validate_15km_radius(user_lat, user_lon, target_lat, target_lon, entity_name="table or food reservation")
 
         # Table Overlap Validation
         table_ids = [str(t['table'].id) for t in tables_data if 'table' in t]
@@ -63,6 +74,7 @@ class ReservationService:
 
     @staticmethod
     @transaction.atomic
+    # Method: confirm_reservation
     def confirm_reservation(reservation_id: str, user=None) -> Reservation:
         reservation = ReservationRepository.get_by_id_for_update(reservation_id)
         if not reservation:
@@ -95,6 +107,7 @@ class ReservationService:
 
     @staticmethod
     @transaction.atomic
+    # Method: cancel_reservation
     def cancel_reservation(reservation_id: str, user=None, remarks="User cancelled.") -> Reservation:
         reservation = ReservationRepository.get_by_id_for_update(reservation_id)
         if not reservation:
@@ -128,6 +141,7 @@ class ReservationService:
 
     @staticmethod
     @transaction.atomic
+    # Method: modify_reservation
     def modify_reservation(reservation_id: str, updates: Dict[str, Any], items_data: List[Dict[str, Any]] = None, user=None) -> Reservation:
         reservation = ReservationRepository.get_by_id_for_update(reservation_id)
         if not reservation:
@@ -171,6 +185,7 @@ class ReservationService:
 
     @staticmethod
     @transaction.atomic
+    # Method: convert_to_order
     def convert_to_order(reservation_id: str, user=None) -> Any:
         reservation = ReservationRepository.get_by_id_for_update(reservation_id)
         if not reservation:
@@ -223,6 +238,7 @@ class ReservationService:
 
     @staticmethod
     @transaction.atomic
+    # Method: expire_stale_reservations
     def expire_stale_reservations():
         """
         Intended to be called by Celery beat or a management command periodically.
